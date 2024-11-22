@@ -2,6 +2,11 @@
 module "ec2_public" {
     source  = "terraform-aws-modules/ec2-instance/aws"
     version = "5.7.1"  
+
+    depends_on = [
+        module.vpc,
+        aws_key_pair.bastion_key_pair
+    ]
   
     name = "${local.name}-BastionHost"
     ami                    = var.instance_ami
@@ -17,5 +22,5 @@ module "ec2_public" {
 
 resource "aws_key_pair" "bastion_key_pair" {
     key_name   = "bastion" # Name of the SSH key in AWS
-    public_key = file("files/id_rsa.pub")
+    public_key = file("${path.module}/files/id_rsa.pub")
 }
