@@ -2,6 +2,9 @@ ACCOUNT_ID := $(shell aws sts get-caller-identity --query Account --output text)
 TF_BUCKET_NAME := terraform-state-$(ACCOUNT_ID)
 TF_DYNODB_TABLE_NAME := terraform-state-$(ACCOUNT_ID)
 
+up: init vpc_plan vpc_apply
+down: vpc_destroy clean
+
 init:
 	echo "... Installing requirements.txt"
 	pip install -r requirements.txt
@@ -23,10 +26,15 @@ vpc_init:
 			-backend-config="dynamodb_table=$(TF_DYNODB_TABLE_NAME)" \
 			-backend-config="encrypt=true"
 
-vpc_plan:
+vpc_plan: vpc_init
 	cd terraform/vpc && \
 		terraform plan
 
+vpc_apply:
+	cd terraform/vpc && \
+		terraform apply -auto-approve
+
 vpc_destroy:
 	cd terraform/vpc && \
-		terraform plan -destory
+		terraform destroy
+
