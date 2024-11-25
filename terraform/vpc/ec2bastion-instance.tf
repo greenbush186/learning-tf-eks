@@ -5,7 +5,9 @@ module "ec2_public" {
 
     depends_on = [
         module.vpc,
-        aws_key_pair.bastion_key_pair
+        aws_key_pair.bastion_key_pair,
+        aws_iam_instance_profile.bastion_instance_profile,
+        aws_eks_cluster.eks_cluster
     ]
   
     name = "${local.name}-BastionHost"
@@ -16,6 +18,10 @@ module "ec2_public" {
     subnet_id              = module.vpc.public_subnets[0]
     vpc_security_group_ids = [aws_security_group.public_bastion_sg.id]
     associate_public_ip_address = true
+    iam_instance_profile    = aws_iam_instance_profile.bastion_instance_profile.name
+
+    # User Data Script
+    user_data = file("${path.module}/files/bastion-user-data.sh")
     
     tags = local.common_tags
 }
