@@ -47,44 +47,41 @@ output "cluster_primary_security_group_id" {
 # EKS Node Group Outputs - Public
 output "node_group_public_id" {
   description = "Public Node Group ID"
-  value       = aws_eks_node_group.eks_nodegroup_public.id
+  value       = var.cluster_provide_public_node_group ? aws_eks_node_group.eks_nodegroup_public[0].id : null
 }
 
 output "node_group_public_arn" {
   description = "Public Node Group ARN"
-  value       = aws_eks_node_group.eks_nodegroup_public.arn
+  value       = var.cluster_provide_public_node_group ? aws_eks_node_group.eks_nodegroup_public[0].arn : null
 }
 
 output "node_group_public_status" {
   description = "Public Node Group status"
-  value       = aws_eks_node_group.eks_nodegroup_public.status 
+  value       = var.cluster_provide_public_node_group ? aws_eks_node_group.eks_nodegroup_public[0].status : null
 }
 
 output "node_group_public_version" {
   description = "Public Node Group Kubernetes Version"
-  value       = aws_eks_node_group.eks_nodegroup_public.version
+  value       = var.cluster_provide_public_node_group ? aws_eks_node_group.eks_nodegroup_public[0].version: null
 }
 
 # EKS Node Group Outputs - Private
-/*
 output "node_group_private_id" {
   description = "Node Group 1 ID"
-  value       = aws_eks_node_group.eks_nodegroup_private.id
+  value       = var.cluster_provide_private_node_group ? aws_eks_node_group.eks_nodegroup_private[0].id : null
 }
 
 output "node_group_private_arn" {
   description = "Private Node Group ARN"
-  value       = aws_eks_node_group.eks_nodegroup_private.arn
+  value       = var.cluster_provide_private_node_group ? aws_eks_node_group.eks_nodegroup_private[0].arn : null
 }
 
 output "node_group_private_status" {
   description = "Private Node Group status"
-  value       = aws_eks_node_group.eks_nodegroup_private.status 
+  value       = var.cluster_provide_private_node_group ? aws_eks_node_group.eks_nodegroup_private[0].status  : null
 }
 
 output "node_group_private_version" {
   description = "Private Node Group Kubernetes Version"
-  value       = aws_eks_node_group.eks_nodegroup_private.version
+  value       = var.cluster_provide_private_node_group ? aws_eks_node_group.eks_nodegroup_private[0].version : null
 }
-
-*/

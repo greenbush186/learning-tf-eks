@@ -1,5 +1,7 @@
 # Create AWS EKS Node Group - Public
 resource "aws_eks_node_group" "eks_nodegroup_public" {
+    count = var.cluster_provide_public_node_group ? 1 : 0
+
     cluster_name    = aws_eks_cluster.eks_cluster.name
 
     node_group_name = "${local.name}-eks-nodegroup-public"

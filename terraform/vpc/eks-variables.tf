@@ -27,3 +27,13 @@ variable cluster_service_ipv4_cidr {
     type        = string
     description = "EKS Cluster Service IPv4 CIDR"
 }
+
+variable cluster_provide_public_node_group {
+    type        = bool
+    description = "EKS Cluster Provide Public Node Group"
+}
+
+variable cluster_provide_private_node_group {
+    type        = bool
+    description = "EKS Cluster Provide Private Node Group"
+}

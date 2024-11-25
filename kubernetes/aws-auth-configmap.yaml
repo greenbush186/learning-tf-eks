@@ -11,6 +11,12 @@ data:
       username: bastion-user
       groups:
         - system:masters
+
+    - rolearn: arn:aws:iam::640168424446:role/eks-admin
+      username: eks-admin
+      groups:
+        - system:masters
+
 kind: ConfigMap
 metadata:
   name: aws-auth

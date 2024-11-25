@@ -21,7 +21,11 @@ module "ec2_public" {
     iam_instance_profile    = aws_iam_instance_profile.bastion_instance_profile.name
 
     # User Data Script
-    user_data = file("${path.module}/files/bastion-user-data.sh")
+    user_data = templatefile("${path.module}/files/bastion-user-data.sh", {
+        region = data.aws_region.current.name
+        cluster_id = aws_eks_cluster.eks_cluster.id
+        bastion_role_arn = aws_iam_role.bastion_role.arn
+    })
     
     tags = local.common_tags
 }
